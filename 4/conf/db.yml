@@ -1,0 +1,4 @@
+url: postgresql://user:password@postgres/programmers
+migrations_dir: migrations/
+automigrate: True
+testing: False

@@ -1,0 +1,4 @@
+url: postgresql://user:password@postgres/programmers-test
+migrations_dir: src/python/cmdb/migrations/
+automigrate: True
+testing: True

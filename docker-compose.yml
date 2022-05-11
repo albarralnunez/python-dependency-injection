@@ -1,0 +1,38 @@
+version: '3'
+
+volumes:
+  local_postgres_data: {}
+
+services:
+  devbox:
+    env_file:
+    - .env 
+    build:
+      context: .
+      dockerfile: docker/dev/Dockerfile
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./docker/postgres/Dockerfile
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data
+      - .postgres_backups:/var/lib/postgresql/backups
+    expose:
+      - 5432
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_MULTIPLE_DATABASES="programmers"
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+
+  adminer:
+    image: adminer
+    depends_on: 
+      - postgres
+    ports:
+      - 8081:8080
+
